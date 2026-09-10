@@ -177,8 +177,11 @@ public class RegistrationService {
         if (registrationRepository.existsByRace_IdAndCompetitor_IdAndStatusIn(raceId, competitor.getId(), ACTIVE_STATUSES)) {
             throw new ConflictException("Competitor is already registered for this race");
         }
-        if (competitor.getTeam() != null && registrationRepository
-                .existsByRace_IdAndTeam_IdAndStatusIn(raceId, competitor.getTeam().getId(), ACTIVE_STATUSES)) {
+
+        UUID teamId = teamService.findCurrentActiveTeamId(competitor.getId());
+
+        if (teamId != null && registrationRepository
+                .existsByRace_IdAndTeam_IdAndStatusIn(raceId, teamId, ACTIVE_STATUSES)) {
             throw new ConflictException("Competitor is already registered as part of a team in this race");
         }
     }

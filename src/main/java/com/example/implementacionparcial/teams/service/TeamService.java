@@ -32,4 +32,11 @@ public class TeamService {
         }
         return team;
     }
+
+    public UUID findCurrentActiveTeamId(UUID competitorId){
+        //CAMBIAR AL METODO QUE HAY EN FEATURE-COMPETITOR, ESTO ES PLACEHOLDER SOLO PARA DEVOLER UN ID
+        Team placeholder = teamRepository.findById(competitorId)
+                .orElseThrow(()->new RuntimeException());
+        return placeholder.getId();
+    }
 }
