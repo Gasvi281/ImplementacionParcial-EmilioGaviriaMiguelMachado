@@ -1,37 +1,22 @@
 package com.example.implementacionparcial.competitors.entity;
 
-import com.example.implementacionparcial.teams.entity.Team;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.example.implementacionparcial.teams.entity.TeamMember;
+import jakarta.persistence.*;
+import lombok.*;
+import org.springframework.boot.context.properties.bind.DefaultValue;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
-/**
- * Minimal placeholder entity: this domain's full CRUD (dto/mapper/service/controller) is owned by
- * whoever implements {@code feature/competitors}. It exists here only so {@code registrations} can
- * validate competitor eligibility and team membership without depending on unfinished code.
- */
 @Entity
 @Table(name = "competitors")
+@Builder
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@NoArgsConstructor
 public class Competitor {
 
     @Id
@@ -41,21 +26,36 @@ public class Competitor {
     @Column(nullable = false, length = 100)
     private String name;
 
-    @Column(nullable = false, unique = true, length = 50)
+    @Column(nullable = false, unique = true, length = 80)
     private String nickname;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private CompetitorType type;
+    private CompetitorType competitorType;
 
+    @Column(nullable = false)
+    private int age;
+
+    @Column(nullable = false)
+    private float height;
+
+    @Column(nullable = false)
+    private float weight;
+
+    @Column(nullable = false, length = 150)
+    private String placeOfOrigin;
+
+    @Builder.Default
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    @Builder.Default
-    private CompetitorStatus status = CompetitorStatus.ACTIVE;
+    private CompetitorStatus competitorStatus = CompetitorStatus.ACTIVE;
 
-    // Lado "N" de la relación 1-a-N con Team; el dueño real de este dominio puede
-    // resolverla vía TeamMember si el enunciado lo requiere.
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "team_id")
-    private Team team;
+    @Builder.Default
+    @Column(nullable = false)
+    private Date registrationDate = new Date();
+
+    @Builder.Default
+    @OneToMany(mappedBy = "competitor", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<TeamMember> memberships = new ArrayList<>();
 }
+

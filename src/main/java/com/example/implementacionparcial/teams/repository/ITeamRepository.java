@@ -5,8 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.UUID;
 
-/**
- * Minimal placeholder: see {@link com.example.implementacionparcial.teams.entity.Team}.
- */
 public interface ITeamRepository extends JpaRepository<Team, UUID> {
+    boolean existsByName(String name);
+    boolean existsByNameAndIdNot(String name, UUID id);
 }

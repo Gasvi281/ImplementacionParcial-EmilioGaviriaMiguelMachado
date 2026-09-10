@@ -1,45 +1,48 @@
 package com.example.implementacionparcial.teams.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import jakarta.persistence.*;
+import lombok.*;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
-/**
- * Minimal placeholder entity: this domain's full CRUD (dto/mapper/service/controller, plus
- * {@code TeamMember} if the reference plan ends up needing it) is owned by whoever implements
- * {@code feature/teams}. It exists here only so {@code registrations} can validate team eligibility
- * without depending on unfinished code.
- */
 @Entity
 @Table(name = "teams")
+@Builder
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@NoArgsConstructor
 public class Team {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    UUID id;
 
-    @Column(nullable = false, length = 100)
+    @Column(nullable = false, unique = true, length = 120)
     private String name;
 
-    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 1000)
+    private String description;
+
+    @Column(nullable = false, length = 100)
+    private String coach;
+
     @Column(nullable = false)
+    private int maxMembers;
+
     @Builder.Default
+    @Column(nullable = false)
+    private Date creationDate = new Date();
+
+    @Enumerated(EnumType.STRING)
+    @Builder.Default
+    @Column(nullable = false)
     private TeamStatus status = TeamStatus.ACTIVE;
+
+    @Builder.Default
+    @OneToMany(mappedBy = "team", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<TeamMember> members = new ArrayList<>();
 }
