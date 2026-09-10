@@ -16,6 +16,7 @@ public final class TeamMapper {
                 .name(request.name())
                 .description((request.description()))
                 .coach(request.coach())
+                .maxMembers(request.maxMembers())
                 .build();
     }
 

@@ -13,8 +13,8 @@ public final class TeamMemberMapper {
         if(teamMember == null) return null;
         return new TeamMemberResponse(
                 teamMember.getId(),
-                teamMember.getCompetitor().getId(),
                 teamMember.getTeam().getId(),
+                teamMember.getCompetitor().getId(),
                 teamMember.getJoinedAt()
         );
     }
