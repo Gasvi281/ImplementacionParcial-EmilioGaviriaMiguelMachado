@@ -1,5 +1,7 @@
 package com.example.implementacionparcial.competitors.service;
 
+import com.example.implementacionparcial.common.exceptions.ConflictException;
+import com.example.implementacionparcial.common.exceptions.ResourceNotFoundException;
 import com.example.implementacionparcial.competitors.dto.CompetitorRequest;
 import com.example.implementacionparcial.competitors.dto.CompetitorResponse;
 import com.example.implementacionparcial.competitors.entity.Competitor;
@@ -22,7 +24,7 @@ public class CompetitorService {
     private final ICompetitorRepository competitorRepository;
 
     @Transactional(readOnly = true)
-    public List<CompetitorResponse> getCompetitors(){
+    public List<CompetitorResponse> getCompetitors() {
         return competitorRepository.findAll()
                 .stream()
                 .map(CompetitorMapper::toResponse)
@@ -30,7 +32,7 @@ public class CompetitorService {
     }
 
     @Transactional(readOnly = true)
-    public CompetitorResponse getById(UUID id){
+    public CompetitorResponse getById(UUID id) {
         Competitor competitor = findCompetitorOrThrow(id);
         return CompetitorMapper.toResponse(competitor);
     }
@@ -79,7 +81,7 @@ public class CompetitorService {
         Competitor competitor = findCompetitorOrThrow(id);
 
         if (competitor.getCompetitorStatus() != CompetitorStatus.RETIRED) {
-            throw new RuntimeException("Only RETIRED competitors can be permanently deleted");
+            throw new ConflictException("Only RETIRED competitors can be permanently deleted");
         }
 
         competitorRepository.delete(competitor);
@@ -88,16 +90,16 @@ public class CompetitorService {
 
     private Competitor findCompetitorOrThrow(UUID id) {
         return competitorRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Competitor not found with id: " + id));
+                .orElseThrow(() -> ResourceNotFoundException.of("Competitor", id));
     }
 
-    private void validateNicknameNotDuplicated(String nickname, UUID id){
+    private void validateNicknameNotDuplicated(String nickname, UUID id) {
         boolean exists = (id == null)
                 ? competitorRepository.existsByNickname(nickname)
                 : competitorRepository.existsByNicknameAndIdNot(nickname, id);
 
         if (exists) {
-            throw new RuntimeException("Nickname already exists: " + nickname);
+            throw new ConflictException("Nickname already exists: " + nickname);
         }
     }
 }
