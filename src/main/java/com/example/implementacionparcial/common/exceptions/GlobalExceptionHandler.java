@@ -55,7 +55,7 @@ public class GlobalExceptionHandler {
     }
 
     private ResponseEntity<ErrorResponse> build(HttpStatus status, String message, HttpServletRequest req,
-                                                Map<String, String> validationErrors) {
+                                                 Map<String, String> validationErrors) {
         ErrorResponse body = new ErrorResponse(LocalDateTime.now(), status.value(), status.getReasonPhrase(),
                 message, req.getRequestURI(), validationErrors);
         return ResponseEntity.status(status).body(body);
