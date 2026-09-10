@@ -12,6 +12,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,6 +27,7 @@ public class TeamController {
     private final TeamService teamService;
 
     @GetMapping
+    @PreAuthorize("isAuthenticated()")
     @Operation(summary = "List all teams")
     @ApiResponses({@ApiResponse(responseCode = "200", description = "Teams listed successfully")})
     public ResponseEntity<List<TeamResponse>> getAll() {
@@ -33,6 +35,7 @@ public class TeamController {
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("isAuthenticated()")
     @Operation(summary = "Get a team by id")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Team found"),
@@ -43,6 +46,7 @@ public class TeamController {
     }
 
     @PostMapping
+    @PreAuthorize("hasAnyRole('ADMINISTRATOR')")
     @Operation(summary = "Create a new team")
     @ApiResponses({
             @ApiResponse(responseCode = "201", description = "Team created"),
@@ -55,6 +59,7 @@ public class TeamController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ADMINISTRATOR')")
     @Operation(summary = "Replace a team completely")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Team updated"),
@@ -69,6 +74,7 @@ public class TeamController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ADMINISTRATOR')")
     @Operation(summary = "Deactivate a team (logical delete: status set to Inactive)")
     @ApiResponses({
             @ApiResponse(responseCode = "204", description = "Team deactivated"),
@@ -80,6 +86,7 @@ public class TeamController {
     }
 
     @PostMapping("/{teamId}/members/{competitorId}")
+    @PreAuthorize("hasAnyRole('ADMINISTRATOR')")
     @Operation(summary = "Add a competitor to a team")
     @ApiResponses({
             @ApiResponse(responseCode = "201", description = "Competitor added to team"),
@@ -94,6 +101,7 @@ public class TeamController {
     }
 
     @DeleteMapping("/{teamId}/members/{competitorId}")
+    @PreAuthorize("hasAnyRole('ADMINISTRATOR')")
     @Operation(summary = "Remove a competitor from a team")
     @ApiResponses({
             @ApiResponse(responseCode = "204", description = "Competitor removed from team"),

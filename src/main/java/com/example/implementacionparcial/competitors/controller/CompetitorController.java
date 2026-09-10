@@ -12,6 +12,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,6 +27,7 @@ public class CompetitorController {
     private final CompetitorService competitorService;
 
     @GetMapping
+    @PreAuthorize("isAuthenticated()")
     @Operation(summary = "List all competitors")
     @ApiResponses({@ApiResponse(responseCode = "200", description = "Competitors listed successfully")})
     public ResponseEntity<List<CompetitorResponse>> getAll() {
@@ -33,6 +35,7 @@ public class CompetitorController {
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("isAuthenticated()")
     @Operation(summary = "Get a competitor by id")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Competitor found"),
@@ -43,6 +46,7 @@ public class CompetitorController {
     }
 
     @PostMapping
+    @PreAuthorize("hasAnyRole('ADMINISTRATOR')")
     @Operation(summary = "Create a new competitor")
     @ApiResponses({
             @ApiResponse(responseCode = "201", description = "Competitor created"),
@@ -55,6 +59,7 @@ public class CompetitorController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ADMINISTRATOR')")
     @Operation(summary = "Replace a competitor completely")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Competitor updated"),
@@ -69,6 +74,7 @@ public class CompetitorController {
     }
 
     @PatchMapping("/{id}/status")
+    @PreAuthorize("hasAnyRole('ADMINISTRATOR')")
     @Operation(summary = "Change a competitor's status")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Status updated"),
@@ -81,6 +87,7 @@ public class CompetitorController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ADMINISTRATOR')")
     @Operation(summary = "Permanently delete a competitor (only if RETIRED)")
     @ApiResponses({
             @ApiResponse(responseCode = "204", description = "Competitor deleted"),

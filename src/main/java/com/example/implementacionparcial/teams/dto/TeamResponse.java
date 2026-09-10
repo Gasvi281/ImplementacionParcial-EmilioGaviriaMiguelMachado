@@ -1,5 +1,6 @@
 package com.example.implementacionparcial.teams.dto;
 
+import com.example.implementacionparcial.teams.entity.TeamStatus;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.util.Date;
@@ -27,8 +28,8 @@ public record TeamResponse(
         @Schema(description = "Team formation date")
         Date creationDate,
 
-        @Schema(description = "If inactive, the team was deactivated")
-        String status,
+        @Schema(description = " Team status")
+        TeamStatus status,
 
         @Schema(description = "The registrations of all team members")
         List<TeamMemberResponse> teamMembers

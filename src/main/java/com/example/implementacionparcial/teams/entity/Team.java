@@ -37,9 +37,10 @@ public class Team {
     @Column(nullable = false)
     private Date creationDate = new Date();
 
+    @Enumerated(EnumType.STRING)
     @Builder.Default
     @Column(nullable = false)
-    private String status = "Active";
+    private TeamStatus status = TeamStatus.ACTIVE;
 
     @Builder.Default
     @OneToMany(mappedBy = "team", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
