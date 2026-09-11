@@ -79,7 +79,12 @@ class TeamServiceTest {
     void createTeam_mapsMaxMembersCorrectly_recordsAudit() {
         TeamRequest request = new TeamRequest("Enanos del valle", "desc de al menos treinta caracteres largos", "Chiqui Tapia", 8);
         when(teamRepository.existsByName(request.name())).thenReturn(false);
-        when(teamRepository.save(any(Team.class))).thenAnswer(inv -> inv.getArgument(0));
+        when(teamRepository.save(any(Team.class)))
+                .thenAnswer(inv -> {
+                    Team t = inv.getArgument(0);
+                    t.setId(UUID.randomUUID());
+                    return t;
+                });
         when(currentUser.id()).thenReturn(userId);
 
         TeamResponse response = teamService.createTeam(request);

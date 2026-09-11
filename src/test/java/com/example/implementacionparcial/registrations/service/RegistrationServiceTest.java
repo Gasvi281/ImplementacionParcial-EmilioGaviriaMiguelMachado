@@ -96,9 +96,9 @@ class RegistrationServiceTest {
                 .id(UUID.randomUUID())
                 .name("Speedy")
                 .nickname("speedy-" + UUID.randomUUID())
-                .type(CompetitorType.CAMEL)
-                .status(CompetitorStatus.ACTIVE)
-                .team(team)
+                .competitorType(CompetitorType.CAMEL)
+                .competitorStatus(CompetitorStatus.ACTIVE)
+                //.team(team)
                 .build();
     }
 
@@ -210,6 +210,7 @@ class RegistrationServiceTest {
         Competitor competitor = activeCompetitor(team);
         when(raceRepository.findById(race.getId())).thenReturn(Optional.of(race));
         when(competitorService.getEligibleOrThrow(competitor.getId())).thenReturn(competitor);
+        when(teamService.findCurrentActiveTeamId(competitor.getId())).thenReturn(team.getId());
         when(registrationRepository.existsByRace_IdAndCompetitor_IdAndStatusIn(eq(race.getId()), eq(competitor.getId()), any()))
                 .thenReturn(false);
         when(registrationRepository.existsByRace_IdAndTeam_IdAndStatusIn(eq(race.getId()), eq(team.getId()), any()))
@@ -240,8 +241,10 @@ class RegistrationServiceTest {
         Race race = openRace(RaceType.TEAM, 10);
         Team team = activeTeam();
         Competitor injured = Competitor.builder()
-                .id(UUID.randomUUID()).name("Hurt").nickname("hurt").type(CompetitorType.DWARF)
-                .status(CompetitorStatus.INJURED).team(team).build();
+                .id(UUID.randomUUID()).name("Hurt").nickname("hurt").competitorType(CompetitorType.DWARF)
+                .competitorStatus(CompetitorStatus.INJURED)
+                //.team(team)
+                .build();
         when(raceRepository.findById(race.getId())).thenReturn(Optional.of(race));
         when(teamService.getEligibleOrThrow(team.getId())).thenReturn(team);
         when(competitorService.findByTeam(team.getId())).thenReturn(List.of(injured));

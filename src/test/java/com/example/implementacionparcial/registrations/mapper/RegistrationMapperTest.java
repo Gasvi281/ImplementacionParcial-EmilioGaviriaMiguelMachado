@@ -38,8 +38,8 @@ class RegistrationMapperTest {
                 .id(UUID.randomUUID())
                 .name("Speedy")
                 .nickname("speedy")
-                .type(CompetitorType.CAMEL)
-                .status(CompetitorStatus.ACTIVE)
+                .competitorType(CompetitorType.CAMEL)
+                .competitorStatus(CompetitorStatus.ACTIVE)
                 .build();
     }
 

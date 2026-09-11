@@ -44,8 +44,8 @@ class StandingServiceTest {
                 .id(UUID.randomUUID())
                 .name(nickname)
                 .nickname(nickname + "-" + UUID.randomUUID())
-                .type(CompetitorType.CAMEL)
-                .status(CompetitorStatus.ACTIVE)
+                .competitorType(CompetitorType.CAMEL)
+                .competitorStatus(CompetitorStatus.ACTIVE)
                 .build();
     }
 

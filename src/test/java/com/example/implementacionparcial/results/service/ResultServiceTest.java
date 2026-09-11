@@ -92,8 +92,8 @@ class ResultServiceTest {
                 .id(UUID.randomUUID())
                 .name("Speedy")
                 .nickname("speedy-" + UUID.randomUUID())
-                .type(CompetitorType.CAMEL)
-                .status(CompetitorStatus.ACTIVE)
+                .competitorType(CompetitorType.CAMEL)
+                .competitorStatus(CompetitorStatus.ACTIVE)
                 .build();
     }
 

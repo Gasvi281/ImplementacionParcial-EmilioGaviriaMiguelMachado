@@ -2,6 +2,7 @@ package com.example.implementacionparcial.competitors.mapper;
 
 import com.example.implementacionparcial.competitors.dto.CompetitorRequest;
 import com.example.implementacionparcial.competitors.dto.CompetitorResponse;
+import com.example.implementacionparcial.competitors.dto.CompetitorSummaryResponse;
 import com.example.implementacionparcial.competitors.entity.Competitor;
 import com.example.implementacionparcial.teams.mapper.TeamMemberMapper;
 
@@ -41,5 +42,9 @@ public final class CompetitorMapper {
                         .map(TeamMemberMapper::toResponse)
                         .toList()
                 );
+    }
+
+    public static CompetitorSummaryResponse toSummary(Competitor competitor) {
+        return new CompetitorSummaryResponse(competitor.getId(), competitor.getNickname(), competitor.getCompetitorType());
     }
 }

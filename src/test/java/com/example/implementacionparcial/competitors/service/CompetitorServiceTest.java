@@ -84,7 +84,11 @@ class CompetitorServiceTest {
         CompetitorRequest request = sampleRequest();
         when(competitorRepository.existsByNickname("javi123")).thenReturn(false);
         when(competitorRepository.save(any(Competitor.class)))
-                .thenAnswer(invocation -> invocation.getArgument(0));
+                .thenAnswer(invocation -> {
+                    Competitor c = invocation.getArgument(0);
+                    c.setId(UUID.randomUUID());
+                    return c;
+                });
         when(currentUser.id()).thenReturn(userId);
 
         CompetitorResponse response = competitorService.createCompetitor(request);
