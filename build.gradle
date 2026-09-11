@@ -43,3 +43,15 @@ dependencies {
 tasks.named('test') {
     useJUnitPlatform()
 }
+
+// El plugin de Spring Boot genera dos jars: el ejecutable y uno "-plain" con
+// solo las clases. Sin esto, el Dockerfile no sabría cuál copiar.
+tasks.named('jar') {
+    enabled = false
+}
+
+// Nombre fijo del jar ejecutable: así el Dockerfile lo copia por nombre exacto,
+// sin depender de la versión del proyecto.
+tasks.named('bootJar') {
+    archiveFileName = 'app.jar'
+}

@@ -196,9 +196,9 @@ public class RegistrationService {
             throw new BadRequestException("Team has no members to register");
         }
         for (Competitor member : members) {
-            if (member.getStatus() != CompetitorStatus.ACTIVE) {
+            if (member.getCompetitorStatus() != CompetitorStatus.ACTIVE) {
                 throw new ConflictException(
-                        "Team member '%s' is not eligible (status: %s)".formatted(member.getId(), member.getStatus()));
+                        "Team member '%s' is not eligible (status: %s)".formatted(member.getId(), member.getCompetitorStatus()));
             }
             if (registrationRepository.existsByRace_IdAndCompetitor_IdAndStatusIn(raceId, member.getId(), ACTIVE_STATUSES)) {
                 throw new ConflictException(

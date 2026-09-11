@@ -2,6 +2,7 @@ package com.example.implementacionparcial.teams.mapper;
 
 import com.example.implementacionparcial.teams.dto.TeamRequest;
 import com.example.implementacionparcial.teams.dto.TeamResponse;
+import com.example.implementacionparcial.teams.dto.TeamSummaryResponse;
 import com.example.implementacionparcial.teams.entity.Team;
 
 public final class TeamMapper {
@@ -34,5 +35,12 @@ public final class TeamMapper {
                         .map(TeamMemberMapper::toResponse)
                         .toList()
         );
+    }
+
+    public static TeamSummaryResponse toSummary(Team team) {
+        return new TeamSummaryResponse(
+                team.getId(),
+                team.getName(),
+                team.getStatus());
     }
 }

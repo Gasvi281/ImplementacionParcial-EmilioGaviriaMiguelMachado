@@ -56,9 +56,9 @@ class RaceRegistrationRepositoryIntegrationTest {
         return competitorRepository.save(Competitor.builder()
                 .name("Speedy")
                 .nickname("speedy-" + UUID.randomUUID())
-                .type(CompetitorType.CAMEL)
-                .status(CompetitorStatus.ACTIVE)
-                .team(team)
+                .competitorType(CompetitorType.CAMEL)
+                .competitorStatus(CompetitorStatus.ACTIVE)
+                //.team(team)
                 .build());
     }
 
