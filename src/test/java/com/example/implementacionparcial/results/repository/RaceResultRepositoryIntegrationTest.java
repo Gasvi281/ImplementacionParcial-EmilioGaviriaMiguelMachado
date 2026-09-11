@@ -58,11 +58,21 @@ class RaceResultRepositoryIntegrationTest {
                 .nickname("speedy-" + UUID.randomUUID())
                 .competitorType(CompetitorType.CAMEL)
                 .competitorStatus(CompetitorStatus.ACTIVE)
+                .age(25)
+                .height(1.5f)
+                .weight(70f)
+                .placeOfOrigin("Medellin")
                 .build());
     }
 
     private Team persistedTeam() {
-        return teamRepository.save(Team.builder().name("Dune Runners").status(TeamStatus.ACTIVE).build());
+        return teamRepository.save(Team.builder()
+                .name("Dune Runners")
+                .description("Equipo de prueba para los tests de integración")
+                .coach("Test coach")
+                .maxMembers(10)
+                .status(TeamStatus.ACTIVE)
+                .build());
     }
 
     private RaceResult newResult(Race race, Competitor competitor, Team team, ResultStatus status, Integer finalPosition) {

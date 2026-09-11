@@ -210,6 +210,7 @@ class RegistrationServiceTest {
         Competitor competitor = activeCompetitor(team);
         when(raceRepository.findById(race.getId())).thenReturn(Optional.of(race));
         when(competitorService.getEligibleOrThrow(competitor.getId())).thenReturn(competitor);
+        when(teamService.findCurrentActiveTeamId(competitor.getId())).thenReturn(team.getId());
         when(registrationRepository.existsByRace_IdAndCompetitor_IdAndStatusIn(eq(race.getId()), eq(competitor.getId()), any()))
                 .thenReturn(false);
         when(registrationRepository.existsByRace_IdAndTeam_IdAndStatusIn(eq(race.getId()), eq(team.getId()), any()))
