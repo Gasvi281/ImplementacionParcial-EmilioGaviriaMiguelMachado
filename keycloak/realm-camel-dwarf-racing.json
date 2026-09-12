@@ -1,0 +1,62 @@
+{
+  "realm": "camel-dwarf-racing",
+  "enabled": true,
+  "sslRequired": "none",
+
+  "accessTokenLifespan": 1800,
+  "ssoSessionIdleTimeout": 3600,
+
+  "roles": {
+    "realm": [
+      { "name": "ADMINISTRATOR", "description": "Acceso total: crea, edita y borra en todos los módulos" },
+      { "name": "RACE_ORGANIZER", "description": "Gestiona carreras, inscripciones y resultados" },
+      { "name": "VIEWER", "description": "Solo lectura (GET) en todos los recursos" }
+    ]
+  },
+
+  "clients": [
+    {
+      "clientId": "racing-frontend",
+      "name": "Racing Frontend (React)",
+      "enabled": true,
+      "protocol": "openid-connect",
+      "publicClient": true,
+      "standardFlowEnabled": true,
+      "directAccessGrantsEnabled": false,
+      "serviceAccountsEnabled": false,
+      "redirectUris": ["http://localhost:5173/*"],
+      "webOrigins": ["http://localhost:5173"],
+      "attributes": {
+        "pkce.code.challenge.method": "S256"
+      },
+      "defaultClientScopes": ["web-origins", "profile", "roles", "email"]
+    }
+  ],
+
+  "users": [
+    {
+      "username": "admin.demo",
+      "enabled": true,
+      "emailVerified": true,
+      "email": "admin@racing.demo",
+      "credentials": [{ "type": "password", "value": "admin1234", "temporary": false }],
+      "realmRoles": ["ADMINISTRATOR"]
+    },
+    {
+      "username": "organizer.demo",
+      "enabled": true,
+      "emailVerified": true,
+      "email": "organizer@racing.demo",
+      "credentials": [{ "type": "password", "value": "organizer1234", "temporary": false }],
+      "realmRoles": ["RACE_ORGANIZER"]
+    },
+    {
+      "username": "viewer.demo",
+      "enabled": true,
+      "emailVerified": true,
+      "email": "viewer@racing.demo",
+      "credentials": [{ "type": "password", "value": "viewer1234", "temporary": false }],
+      "realmRoles": ["VIEWER"]
+    }
+  ]
+}
