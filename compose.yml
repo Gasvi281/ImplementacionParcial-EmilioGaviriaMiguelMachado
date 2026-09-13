@@ -60,5 +60,20 @@ services:
       keycloak:
         condition: service_healthy
 
+  frontend:
+    container_name: racing-frontend
+    build:
+      context: ./frontend
+      args:
+        # Direcciones que verá el NAVEGADOR (no la red interna de Docker), por eso apuntan a
+        # localhost: Keycloak sigue expuesto en el host vía KEYCLOAK_PORT.
+        VITE_KEYCLOAK_URL: http://localhost:${KEYCLOAK_PORT:-8180}
+        VITE_KEYCLOAK_REALM: camel-dwarf-racing
+        VITE_KEYCLOAK_CLIENT_ID: racing-frontend
+    ports:
+      - "5173:80"
+    depends_on:
+      - backend
+
 volumes:
   pgdata:
