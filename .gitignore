@@ -35,3 +35,29 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### Project-specific (Camel vs. Dwarf Racing System) ###
+# Credenciales reales de Docker Compose (DB_*, KEYCLOAK_*) — .env.template sí se commitea,
+# ver docs/plan-proyecto.md sección 4/12.
+.env
+.env.*
+!.env.template
+
+# Logs locales (app, tests, contenedores)
+*.log
+logs/
+
+# Basura de SO
+.DS_Store
+Thumbs.db
+
+# Frontend (React/Vite), cuando se agregue bajo /frontend
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+
+# Instrucciones/config de Claude Code y planeación interna: uso local del equipo, no se commitea.
+# Ojo: NO ignora todo /docs — el enunciado pide diagrama ER, informe técnico, etc. ahí más adelante.
+CLAUDE.md
+.claude/
+docs/plan-proyecto.md
