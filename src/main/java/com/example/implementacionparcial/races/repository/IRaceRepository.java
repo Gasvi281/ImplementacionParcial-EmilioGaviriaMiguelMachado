@@ -17,7 +17,7 @@ public interface IRaceRepository extends JpaRepository<Race, UUID> {
             SELECT r FROM Race r
             WHERE (:status IS NULL OR r.status = :status)
               AND (:type IS NULL OR r.type = :type)
-              AND (:name IS NULL OR LOWER(r.name) LIKE LOWER(CONCAT('%', :name, '%')))
+              AND (:name IS NULL OR LOWER(r.name) LIKE LOWER(CONCAT('%', CAST(:name AS string), '%')))
             """)
     Page<Race> search(@Param("status") RaceStatus status,
                        @Param("type") RaceType type,
