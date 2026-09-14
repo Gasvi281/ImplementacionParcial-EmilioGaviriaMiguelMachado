@@ -61,7 +61,7 @@ Roles de Keycloak: `ADMINISTRATOR`, `RACE_ORGANIZER`, `VIEWER`.
    |---|---|---|
    | `postgres` | `localhost:5432` | Base de datos |
    | `keycloak` | `http://localhost:8180` | Auth (consola admin en `/admin`) |
-   | `backend` | `http://localhost:8080` | API REST (Swagger en `/swagger-ui.html`) |
+   | `backend` | `http://localhost:8080` | API REST (Swagger en `/swagger-ui/index.html`) |
    | `frontend` | `http://localhost:5173` | Cliente web |
 
 3. Entrar a `http://localhost:5173` y hacer login con alguno de los usuarios de prueba
